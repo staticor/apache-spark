@@ -113,6 +113,8 @@ case class ArrayType(elementType: DataType, containsNull: Boolean) extends DataT
           s"Type ${other.catalogString} does not support ordered operations")
     }
 
+
+    // Spark - 比较两个Array的逻辑。
     def compare(x: ArrayData, y: ArrayData): Int = {
       val leftArray = x
       val rightArray = y

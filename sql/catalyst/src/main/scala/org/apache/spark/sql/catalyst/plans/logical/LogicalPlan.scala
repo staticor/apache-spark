@@ -27,6 +27,7 @@ import org.apache.spark.sql.errors.{QueryCompilationErrors, QueryExecutionErrors
 import org.apache.spark.sql.types.StructType
 
 
+// LogicalPlan   就是一棵 抽象语法树 AST
 abstract class LogicalPlan
   extends QueryPlan[LogicalPlan]
   with AnalysisHelper

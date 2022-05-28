@@ -79,6 +79,7 @@ object TypeUtils {
   }
 
   def getInterpretedOrdering(t: DataType): Ordering[Any] = {
+    //  没有针对 Map类型的排序比较
     t match {
       case i: AtomicType => i.ordering.asInstanceOf[Ordering[Any]]
       case a: ArrayType => a.interpretedOrdering.asInstanceOf[Ordering[Any]]

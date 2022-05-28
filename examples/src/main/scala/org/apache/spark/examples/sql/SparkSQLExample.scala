@@ -54,9 +54,11 @@ object SparkSQLExample {
 
   private def runBasicDataFrameExample(spark: SparkSession): Unit = {
     // $example on:create_df$
+    // 读取本地json文件
+    // 方法 spark.read.json
     val df = spark.read.json("examples/src/main/resources/people.json")
 
-    // Displays the content of the DataFrame to stdout
+    // 查看df
     df.show()
     // +----+-------+
     // | age|   name|
@@ -197,7 +199,7 @@ object SparkSQLExample {
       .map(_.split(","))
       .map(attributes => Person(attributes(0), attributes(1).trim.toInt))
       .toDF()
-    // Register the DataFrame as a temporary view
+    // 创建临时表
     peopleDF.createOrReplaceTempView("people")
 
     // SQL statements can be run by using the sql methods provided by Spark
@@ -220,6 +222,7 @@ object SparkSQLExample {
     // +------------+
 
     // No pre-defined encoders for Dataset[Map[K,V]], define explicitly
+    // 使用Kryo序列化
     implicit val mapEncoder = org.apache.spark.sql.Encoders.kryo[Map[String, Any]]
     // Primitive types and case classes can be also defined as
     // implicit val stringIntMapEncoder: Encoder[Map[String, Any]] = ExpressionEncoder()
@@ -239,6 +242,7 @@ object SparkSQLExample {
     // The schema is encoded in a string
     val schemaString = "name age"
 
+    // 根据 String 类型的Schema,
     // Generate the schema based on the string of schema
     val fields = schemaString.split(" ")
       .map(fieldName => StructField(fieldName, StringType, nullable = true))
